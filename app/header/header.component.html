@@ -1,0 +1,38 @@
+<div class="text-center" *ngIf="isDataLoded">
+  <section id="header">
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- <div><a class="navbar-brand logout-btn" style="color: white;">Logged in as {{displayName}}</a></div> -->
+      <div>
+        <a class="navbar-brand {{
+            ![
+              checkLocation('/ratings'),
+              checkLocation('/admin'),
+              checkLocation('/suggestions'),
+              checkLocation('/rules')
+            ].includes(true)
+              ? 'active-header'
+              : ''
+          }}" [routerLink]="['/']">Home</a>
+        <a class="navbar-brand {{
+            checkLocation('/ratings') ? 'active-header' : ''
+          }}" [routerLink]="['/ratings']">Rating {{ unRatedPlayers > 0 ? "(" + unRatedPlayers + ")" : "" }}</a>
+        <a *ngIf="me" class="navbar-brand {{
+            checkLocation('/suggestions') ? 'active-header' : ''
+          }}" [routerLink]="['/suggestions']">Suggestions
+          {{ unReadSuggestions > 0 ? "(" + unReadSuggestions + ")" : "" }}</a>
+        <a *ngIf="isAdmin" class="navbar-brand {{
+            checkLocation('admin') ? 'active-header' : ''
+          }}" [routerLink]="['/admin']">Admin</a>
+        <!-- <a class="navbar-brand {{
+            checkLocation('rules') ? 'active-header' : ''
+          }}" [routerLink]="['/rules']">Rules</a> -->
+      </div>
+      <div>
+        <a class="navbar-brand logout-btn">
+          <prompt-dialog (onSave)="logOutPrompt($event)" [promptData]="promptDataLogOut">
+          </prompt-dialog>
+        </a>
+      </div>
+    </nav>
+  </section>
+</div>

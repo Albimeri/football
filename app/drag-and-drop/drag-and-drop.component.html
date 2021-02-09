@@ -1,0 +1,25 @@
+<div class="example-container">
+  <h2>Team White</h2>
+  <div cdkDropList #team1List="cdkDropList" [cdkDropListData]="team1" [cdkDropListConnectedTo]="[team2List]"
+    class="example-list" (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="!isAdmin">
+    <div class="example-box" *ngFor="let item of team1" cdkDrag>
+      {{ item.DisplayName }} -
+      {{ item.CanRate || item.IsGuest ? (_commonService.calculateRating(item, users) | number: "1.2-2") : (item.Email === 'albin.gara@solaborate.com' ? "UNDISPUTED" : "N/A") }}
+      {{ item.Role === 0 ? "(GK)" : "" }}
+    </div>
+  </div>
+  <p>Team Average: {{ team1.Average | number: "1.2-2" }}</p>
+</div>
+
+<div class="example-container">
+  <h2>Team Black</h2>
+  <div cdkDropList #team2List="cdkDropList" [cdkDropListData]="team2" [cdkDropListConnectedTo]="[team1List]"
+    class="example-list-black" (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="!isAdmin">
+    <div class="example-box-black" *ngFor="let item of team2" cdkDrag>
+      {{ item.DisplayName }} -
+      {{ item.CanRate || item.IsGuest ? (_commonService.calculateRating(item, users) | number: "1.2-2") : (item.Email === 'albin.gara@solaborate.com' ? "UNDISPUTED" : "N/A") }}
+      {{ item.Role === 0 ? "(GK)" : "" }}
+    </div>
+  </div>
+  <p>Team Average: {{ team2.Average | number: "1.2-2" }}</p>
+</div>

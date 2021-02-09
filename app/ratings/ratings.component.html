@@ -1,0 +1,87 @@
+<div class=" text-center" *ngIf="isDataLoded">
+  <app-header></app-header>
+
+  <section class="jumbotron center">
+    <p class="colorred">
+      <span class="colorred">Note:</span>
+      <span>
+        Please express what you truly mean while rating (only this way we can
+        improve ourselves).
+      </span>
+    </p>
+    <button class="btn btn-primary" (click)="showRatings = !showRatings">
+      {{ showRatings ? "Hide My Ratings" : "Show My Ratings" }}
+    </button>
+    <br />
+    <div class="tableFixHead table-responsive" *ngIf="users.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Rate</th>
+            <th>Rating</th>
+            <th *ngIf="isAdmin">Can Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--Players start-->
+          <tr *ngFor="let user of getPlayers(); let i = index"
+            class="{{ user.UserId === userId ? 'active-ratings' : ' ' }}">
+            <td style="width:20%!important">{{ i + 1 }}.</td>
+            <td style="width:20%!important">{{ user.DisplayName }}</td>
+            <td style="width:20%!important">
+              {{ +user.Role === 0 ? "Goalkeeper" : "Player" }}
+            </td>
+            <td style="width:20%!important">
+              <ngx-stars *ngIf="me && me.CanRate && user.UserId !== userId && user.CanRate && showRatings" [customStarIcons]="heartIcons"
+                [readonly]="false" [maxStars]="10" [color]="'#000000'" [initialStars]="getPlayerRating(user)"
+                (ratingOutput)="ratePlayer($event, user)" [size]="2">
+              </ngx-stars>
+              <span *ngIf="user.UserId === userId && user.CanRate" class="colorred">Cannot rate yourself.</span>
+              <span *ngIf="!user.CanRate" class="colorred">This user can not be rated yet.</span>
+            </td>
+            <td style="width:20%!important">
+              {{ user.CanRate ? (_commonService.calculateRating(user, getPriviledgedUsers()) | number: "1.2-2") : "N/A" }}
+            </td>
+            <td *ngIf="isAdmin">
+              <input type="checkbox" [ngModel]="user.CanRate" (ngModelChange)="setRatePrivilage($event, user)" />
+            </td>
+          </tr>
+
+          <!--Players end-->
+
+          <!--GoalKeepers start-->
+          <tr *ngFor="let user of getGoalKeepers(); let i = index" class="{{
+              user.UserId === userId
+                ? 'active-ratings goalkeepers'
+                : ' goalkeepers'
+            }}">
+            <td style="width:20%!important">{{ i + 1 }}.</td>
+            <td style="width:20%!important">{{ user.DisplayName }}</td>
+            <td style="width:20%!important">
+              {{ +user.Role === 0 ? "Goalkeeper" : "Player" }}
+            </td>
+            <td style="width:20%!important">
+              <ngx-stars *ngIf="me && me.CanRate && user.UserId !== userId && user.CanRate && showRatings" [customStarIcons]="heartIcons"
+                [readonly]="false" [maxStars]="10" [color]="'#000000'" [initialStars]="getPlayerRating(user)"
+                (ratingOutput)="ratePlayer($event, user,this)" [size]="2"></ngx-stars>
+              <span *ngIf="user.UserId === userId && user.CanRate" class="colorred">Cannot rate yourself.</span>
+              <span *ngIf="!user.CanRate" class="colorred">This user can not be rated yet.</span>
+            </td>
+            <td style="width:20%!important">
+              {{ user.CanRate ? (_commonService.calculateRating(user, getPriviledgedUsers()) | number: "1.2-2") : (user.Email === 'albin.gara@solaborate.com' ? "UNDISPUTED" : "N/A") }}
+            </td>
+            <td *ngIf="isAdmin">
+              <input type="checkbox" [ngModel]="user.CanRate" (ngModelChange)="setRatePrivilage($event, user)" />
+            </td>
+          </tr>
+
+          <!--GoalKeepers end-->
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <app-footer></app-footer>
+</div>

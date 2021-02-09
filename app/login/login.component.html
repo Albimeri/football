@@ -1,0 +1,60 @@
+<div class="container text-center" *ngIf="isDataLoded" (keydown)="$event.which === 13 ? (viewType === 'L' ? login() : signUp()) : null">
+  <section class="jumbotron text-center">
+    <h1>Welcome to Europa League</h1>
+    <div class="login-form">
+      <h2 class="text-center" *ngIf="viewType === 'L'">Log In</h2>
+      <h2 class="text-center" *ngIf="viewType === 'S'">Sign Up</h2>
+      <br>
+      <ng-container *ngIf="!['VS','VL'].includes(viewType)">
+        <ng-container *ngIf="['S'].includes(viewType)">
+          <div class="form-group">
+            <input (focus)="hasErrors = false" type="text" class="form-control" placeholder="First Name" [(ngModel)]="user.FirstName"
+              maxlength="20">
+          </div>
+          <div class="form-group">
+            <input (focus)="hasErrors = false" type="text" class="form-control" placeholder="Last Name" [(ngModel)]="user.LastName" maxlength="20">
+          </div>
+        </ng-container>
+
+        <div class="form-group">
+          <input (focus)="hasErrors = false" type="text" class="form-control" placeholder="Email" [(ngModel)]="user.Email">
+        </div>
+        <div class="form-group">
+          <input (focus)="hasErrors = false" type="password" class="form-control" placeholder="Password" [(ngModel)]="user.Password">
+        </div>
+        <p class="error" *ngIf="hasErrors">{{errorObj.message}}</p>
+      </ng-container>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" (click)="login()" *ngIf="viewType === 'L'">
+          Log in
+        </button>
+        <button class="btn btn-primary btn-block" (click)="signUp()" *ngIf="viewType === 'S'">
+          Create Account
+        </button>
+        <ng-container *ngIf="viewType === 'VS'">
+          <p> You just created an account in Europa League. </p>
+          <p> You should shortly receive an email with the activation link.</p>
+        </ng-container>
+        <ng-container *ngIf="viewType === 'VL'">
+          <p> You need to verify your email before using Europa League </p>
+          <a class="blue-link">Re-send verification Code</a>
+        </ng-container>
+
+      </div>
+      <div class="clearfix">
+        <!-- <label class="pull-left checkbox-inline">
+       <input type="checkbox"> Remember me
+      </label>  -->
+        <!-- <a class="pull-right">Forgot Password?</a> -->
+      </div>
+
+      <p class="text-center">
+        <a class="blue-link" (click)="resetUser();viewType = 'S'" *ngIf="viewType === 'L'">Create an Account</a>
+        <a class="blue-link" (click)="resetUser();viewType = 'L'" *ngIf="viewType === 'S'">Login</a>
+        <button type="button" class="btn btn-info" (click)="resetUser();viewType = 'L'" *ngIf="['VS','VL'].includes(viewType)">Back to Login From</button>
+      </p>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,44 @@
+.logout-btn {
+    cursor: pointer;
+    color: white!important;
+}
+
+.tableFixHead {
+    overflow-y: auto; 
+    border: 1px solid #343a40;
+    margin-bottom: 20px;
+}
+
+.tableFixHead th {
+    position: sticky;
+    top: 0;
+}
+
+
+/* Just common table stuff. Really. */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    padding: 5px 5px;
+}
+
+td {
+    padding: 0px 5px;
+}
+
+th {
+    background: #343a40;
+    color: white
+}
+
+.row-grey {
+    background: #e9ecef;
+}
+
+.row-normal {
+    background: #fff;
+}

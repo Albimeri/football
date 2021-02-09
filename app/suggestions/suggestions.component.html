@@ -1,0 +1,94 @@
+<div class="text-center" *ngIf="isDataLoded">
+  <app-header></app-header>
+
+  <section class="jumbotron center">
+    I agree to receive suggestions
+    <input style="margin: 15px!important;height: 12px;" type="checkbox" [ngModel]="canSuggest"
+      (ngModelChange)="setSuggestionPrililage($event)" />
+  </section>
+
+  <!-- <section class="jumbotron center" *ngIf="canSuggest">
+        <h3>Anonymus Suggestions to me:</h3>
+        <div *ngIf="suggestions.length > 0" class="suggestions ">
+            <p *ngFor="let suggestion of suggestions;let i = index">
+                {{i+1}}. {{suggestion.Value}}
+                <button class="btn btn-danger pointer" (click)="removeSuggestion(suggestion)">Remove Suggestion</button>
+            </p>
+
+        </div>
+        <div *ngIf="suggestions.length === 0">
+            <p>There are no suggestions towards you.</p>
+        </div>
+    </section> -->
+
+  <section class="jumbotron center" style="height: 425px;" *ngIf="canSuggest">
+    <h3>Anonymus Suggestions to me:</h3>
+    <br />
+    <div *ngIf="suggestions.length === 0">
+      <p>There are no suggestions towards you.</p>
+    </div>
+    <div class="tableFixHead table-responsive" *ngIf="suggestions.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let suggestion of suggestions; let i = index"
+            class="{{ i % 2 === 0 ? 'row-grey' : 'row-normal' }}">
+            <td style="width:5.3%!important;">{{ i + 1 }}.</td>
+            <td style="width:58.3%!important;">{{ suggestion.Value }}</td>
+            <td style="width:15.3%!important;">
+              {{ suggestion.FullDate | date: "M/d/yyyy" }}
+            </td>
+            <td style="width:15.3%!important;">
+              <button class="btn btn-danger pointer" (click)="removeSuggestion(suggestion)">
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="jumbotron center" *ngIf="!writtingMode">
+    <h3>Pool of Players</h3>
+    <p>Choose a player you want to give a anonymus suggestion to.</p>
+    <br />
+    <div>
+      Filter:
+      <input [ngModel]="seachValue" (ngModelChange)="filterPlayers($event)" placeholder="Player Name" />
+    </div>
+    <br />
+    <div class="wrapper" *ngIf="filteredUsers.length > 0">
+      <ng-container *ngFor="let user of filteredUsers">
+        <div *ngIf="me && user.UserId !== me.UserId" class="grid-element" (click)="selectPlayer(user)">
+          {{ user.DisplayName }}
+        </div>
+      </ng-container>
+    </div>
+    <div *ngIf="filteredUsers.length === 0">
+      <div class="center">No such player</div>
+    </div>
+  </section>
+
+  <section class="jumbotron center" *ngIf="writtingMode">
+    <p>Write a suggestion to {{ selectedPlayer.DisplayName }}</p>
+    <div class="center">
+      <textarea [ngModel]="suggestion" (ngModelChange)="validateSubmit($event)"></textarea>
+    </div>
+    <button (click)="submit()" class="btn btn-success" [disabled]="suggestion.length < 10">
+      Submit
+    </button>
+    <button (click)="back()" class="btn btn-default white">Back</button>
+    <p *ngIf="submitWarning">
+      {{ 10 - suggestion.length }} letters before you submit
+    </p>
+  </section>
+  <app-footer></app-footer>
+</div>

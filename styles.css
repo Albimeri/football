@@ -1,0 +1,273 @@
+#monthsMenu a {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.background-red {
+  background-color: red !important;
+}
+
+.background-green {
+  background-color: green;
+}
+
+.colorred {
+  color: red;
+}
+
+.colorgreen {
+  color: green;
+}
+
+.colorwhite {
+  color: #fff;
+}
+
+.required {
+  font-size: 14px;
+  color: red;
+  height: 50px;
+}
+
+.jumbotron {
+  margin-bottom: 10px;
+}
+
+.expense:hover {
+  cursor: pointer;
+}
+
+.btn-margin {
+  margin: 0 5px;
+}
+
+.radius {
+  border-radius: 5px !important;
+}
+
+.jumbotron {
+  margin-bottom: 10px !important;
+}
+
+.btn {
+  margin: 5px;
+  cursor: pointer !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.small-font {
+  font-size: 14px;
+}
+
+.fa {
+  font-size: 22px !important;
+}
+
+.fa-trash:hover {
+  color: red;
+}
+
+.login-form {
+  width: 340px;
+  margin: 50px auto;
+}
+
+
+/* Dropdown Button */
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px;
+  border: none;
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+
+/* Dropdown Content (Hidden by Default) */
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+
+/* Links inside the dropdown */
+
+.dropdown-content a {
+  color: black;
+  padding: 2.5px 0px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+
+/* Change color of dropdown links on hover */
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+
+/* Show the dropdown menu on hover */
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+input {
+  height: 40px;
+  border: 1px solid #b2aeae;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px !important;
+}
+
+input:active {
+  border-radius: 5px;
+}
+
+.filter-button {
+  border: 1px solid #b2b0b0;
+  border-radius: 5px;
+  height: 40px;
+  margin-left: 10px;
+}
+
+.filter-button:hover {
+  background: #575252;
+  color: #fff;
+}
+
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.button-width {
+  width: 170px !important;
+}
+
+#header {
+  position: sticky;
+  z-index: 999;
+  top: 0;
+}
+
+#header nav {
+  height: 70px;
+}
+
+.navbar-brand {
+  margin-right: 15px;
+}
+
+.jumbotron {
+  padding: 2rem 2rem !important;
+}
+
+.checked {
+  color: orange;
+}
+
+.fa-star {
+  cursor: pointer !important;
+}
+
+.center {
+  margin: auto;
+  margin-top: 20px;
+  width: 80%;
+  padding: 10px;
+}
+
+.active-ratings {
+  background: #d9d9dd !important;
+}
+
+.goalkeepers {
+  background: #d6d6fa;
+}
+
+.active-header {
+  color: #007bff !important;
+  font-weight: bolder;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 10px;
+  cursor: pointer !important;
+  color: white;
+}
+
+.grid-element {
+  padding: 20px;
+  background-color: #9e9ea8;
+  border-radius: 5px;
+}
+
+.grid-element:hover {
+  background-color: #0e4920;
+}
+
+.admin .grid-element:hover {
+  background-color: red;
+}
+
+.grid-element:hover {
+  background-color: #0e4920;
+}
+
+textarea {
+  resize: none;
+  height: 200px;
+  width: 400px;
+}
+
+.white {
+  background-color: white !important;
+  border: 1px solid #a3a3a3 !important;
+}
+
+select {
+  height: 40px;
+  border: 1px solid #b2aeae;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .navbar-brand {
+    font-size: 18px !important;
+  }
+
+  .navbar {
+    height: 120px !important;
+    text-align: center;
+    justify-content: center !important;
+  }
+}

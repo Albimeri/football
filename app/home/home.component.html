@@ -1,0 +1,80 @@
+<div class=" text-center" *ngIf="isDataLoded">
+    <app-header></app-header>
+    <section class="jumbotron ">
+        <h2>Next match at ({{matchDay}})</h2>
+        <h3>Location: <a href="#" (click)="openWindow(selectedField.Coordinations)">Fusha
+                {{selectedField.Description}}</a>
+        </h3>
+        <ng-container *ngIf="canSetStatus">
+            <h2>What is your status?</h2>
+            <h5>Select your role: </h5>
+            <select [(ngModel)]="selectedRoleInt" (ngModelChange)="setRole($event)">
+                <option [value]="role.Key" *ngFor="let role of roles">{{role.Description}}</option>
+            </select>
+            <br>
+            <button [disabled]="canOverrideStatus(1)" class="btn btn btn-outline-success"
+                (click)="setStatus(1)">IN</button>
+            <button [disabled]="canOverrideStatus(2)" class="btn btn btn-outline-danger"
+                (click)="setStatus(2)">OUT</button>
+        </ng-container>
+        <ng-container *ngIf="!canSetStatus">
+            You cannot set status just yet!
+        </ng-container>
+    </section>
+
+    <section class="jumbotron" *ngIf="team1.length > 0 || team2.length > 0">
+        <drag-and-drop [team1]="team1" [team2]="team2" [isAdmin]="isAdmin" [users]="getPriviledgedUsers()">
+        </drag-and-drop>
+        <p *ngIf="isAdmin">
+            <button class="btn btn btn-outline-success" (click)="setTeams()">Save Teams</button>
+            <button class="btn btn btn-outline-danger" (click)="deleteTeams()">Delete Teams</button>
+        </p>
+    </section>
+    <section class="jumbotron" style="height: auto">
+        <h4 *ngIf="!isLoading">In Players: {{inUsers.length}}</h4>
+        <br>
+        <div class="tableFixHead table-responsive" *ngIf="inUsers.length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Role</th>
+                        <th>Time of Decision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let goalKepper of getGoalKeepersWithStatus();let i =index"
+                        class="{{goalKepper.Color}} {{i % 2 === 0 ? 'row-grey' : 'row-normal'}}">
+                        <td style="width:20%!important">{{i+1}}</td>
+                        <td style="width:20%!important">{{goalKepper.DisplayName}}</td>
+                        <td style="width:20%!important">
+                            {{goalKepper.Status === 1 && goalKepper.Status !== 0 ? 'IN' : 'OUT'}} </td>
+                        <td style="width:20%!important">{{goalKepper.Role === 0 ? 'Goalkeeper' : 'Player'}}</td>
+                        <td style="width:20%!important">Priority</td>
+                    </tr>
+                    <tr *ngFor="let player of getUsersWithStatus();let i =index"
+                        class="{{player.Color}} {{i % 2 === 0 ? 'row-grey' : 'row-normal'}}">
+                        <td style="width:20%!important">{{i+1}}</td>
+                        <td style="width:20%!important">{{player.DisplayName}}</td>
+                        <td style="width:20%!important">{{player.Status === 1 && player.Status !== 0 ? 'IN' : 'OUT'}}
+                        </td>
+                        <td style="width:20%!important">{{player.Role === 0 ? 'Goalkeeper' : 'Player'}}</td>
+                        <td style="width:20%!important">{{player.FullDate | date : 'M/d/yyyy, h:mm:SSS a'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section *ngIf="isAdmin">
+        <button [disabled]="inUsers.length === 0" class="btn btn btn-outline-primary" (click)="initTeams()">
+            Init Teams
+        </button>
+        <button [disabled]="inUsers.length === 0" class="btn btn btn-outline-danger" (click)="deleteAllActions()">
+            Delete Players
+        </button>
+    </section>
+
+    <app-footer></app-footer>
+</div>

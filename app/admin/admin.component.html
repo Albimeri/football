@@ -1,58 +1,65 @@
 <div class=" text-center" *ngIf="isDataLoded">
 
     <app-header></app-header>
+    <section *ngIf="isAdmin">
+        <section class="jumbotron ">
+            <h3>Match Info</h3>
+            Match Hour:
+            <select [(ngModel)]="matchHoursInt" (ngModelChange)="changeSelectedHour($event)">
+                <option [value]="hour.Key" *ngFor="let hour of hours">{{hour.Description}}</option>
+            </select> Match Day:
+            <select [(ngModel)]="matchDayInt" (ngModelChange)="changeSelectedDay($event)">
+                <option [value]="day.Key" *ngFor="let day of days">{{day.Description}}</option>
+            </select> Match Field:
+            <select [(ngModel)]="selectedFieldKey" (ngModelChange)="changeSelectedField($event)">
+                <option [value]="field.Key" *ngFor="let field of fields">{{field.Description}}</option>
+            </select>
+        </section>
 
-    <section class="jumbotron ">
-        <h3>Match Info</h3>
-        Match Hour:
-        <select [(ngModel)]="matchHoursInt" (ngModelChange)="changeSelectedHour($event)">
-            <option [value]="hour.Key" *ngFor="let hour of hours">{{hour.Description}}</option>
-        </select> Match Day:
-        <select [(ngModel)]="matchDayInt" (ngModelChange)="changeSelectedDay($event)">
-            <option [value]="day.Key" *ngFor="let day of days">{{day.Description}}</option>
-        </select> Match Field:
-        <select [(ngModel)]="selectedFieldKey" (ngModelChange)="changeSelectedField($event)">
-            <option [value]="field.Key" *ngFor="let field of fields">{{field.Description}}</option>
-        </select>
+        <section class="jumbotron ">
+            <h3>Player Info</h3>
+            <br> Add New Player:
+            <input [(ngModel)]="newPlayerName" placeholder="Player Name" />
+            Role:
+            <select [(ngModel)]="newPlayerRole">
+                <option [value]="role.Key" *ngFor="let role of roles">{{role.Description}}</option>
+            </select>
+            Rate: <select [(ngModel)]="newPlayerRate">
+                <option [value]="rate" *ngFor="let rate of rates">
+                    {{rate}}</option>
+            </select>
+            <button class="btn btn btn-outline-danger" [disabled]="newPlayerName.length === 0"
+                (click)="addNewPlayer(false)">Add</button>
+            <div>
+                <p class="colorgreen" *ngIf="successNewPlayer">Successfully added "{{newPlayerName}}"!</p>
+            </div>
+        </section>
+
+
+        <section class="jumbotron" *ngIf="!writtingMode">
+            <h3>Select to Ban players</h3>
+            <div>
+                Filter: <input [ngModel]="seachValue" (ngModelChange)="filterPlayers($event)"
+                    placeholder="Player Name" />
+            </div>
+            <br>
+            <div class="wrapper center admin" *ngIf="filteredUsers.length > 0">
+                <ng-container *ngFor="let user of filteredUsers">
+                    <div class="grid-element {{user.IsBanned ? 'colorwhite background-red' : ''}}"
+                        (click)="toggleIsBannedPlayer(user)">
+                        {{user.DisplayName}}
+                    </div>
+                </ng-container>
+            </div>
+            <div *ngIf="filteredUsers.length === 0">
+                <div class="center">No such player </div>
+            </div>
+        </section>
+    </section>
+    <section *ngIf="!isAdmin">
+        <br />
+        <h1>Nice try!</h1>
     </section>
 
-    <section class="jumbotron ">
-        <h3>Player Info</h3>
-        <br> Add New Player:
-        <input [(ngModel)]="newPlayerName" placeholder="Player Name" />
-        Role:
-        <select [(ngModel)]="newPlayerRole">
-            <option [value]="role.Key" *ngFor="let role of roles">{{role.Description}}</option>
-        </select>
-        Rate: <select [(ngModel)]="newPlayerRate">
-            <option [value]="rate" *ngFor="let rate of rates">
-                {{rate}}</option>
-        </select>
-        <button class="btn btn btn-outline-danger" [disabled]="newPlayerName.length === 0"
-            (click)="addNewPlayer(false)">Add</button>
-        <div>
-            <p class="colorgreen" *ngIf="successNewPlayer">Successfully added "{{newPlayerName}}"!</p>
-        </div>
-    </section>
-
-
-    <section class="jumbotron" *ngIf="!writtingMode">
-        <h3>Select to Ban players</h3>
-        <div>
-            Filter: <input [ngModel]="seachValue" (ngModelChange)="filterPlayers($event)" placeholder="Player Name" />
-        </div>
-        <br>
-        <div class="wrapper center admin" *ngIf="filteredUsers.length > 0">
-            <ng-container *ngFor="let user of filteredUsers">
-                <div class="grid-element {{user.IsBanned ? 'colorwhite background-red' : ''}}"
-                    (click)="toggleIsBannedPlayer(user)">
-                    {{user.DisplayName}}
-                </div>
-            </ng-container>
-        </div>
-        <div *ngIf="filteredUsers.length === 0">
-            <div class="center">No such player </div>
-        </div>
-    </section>
     <app-footer></app-footer>
 </div>

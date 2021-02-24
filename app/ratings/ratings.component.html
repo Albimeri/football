@@ -35,15 +35,16 @@
               {{ +user.Role === 0 ? "Goalkeeper" : "Player" }}
             </td>
             <td style="width:20%!important">
-              <ngx-stars *ngIf="me && me.CanRate && user.UserId !== userId && user.CanRate && showRatings" [customStarIcons]="heartIcons"
-                [readonly]="false" [maxStars]="10" [color]="'#000000'" [initialStars]="getPlayerRating(user)"
-                (ratingOutput)="ratePlayer($event, user)" [size]="2">
+              <ngx-stars *ngIf="me && me.CanRate && user.UserId !== userId && user.CanRate && showRatings"
+                [customStarIcons]="heartIcons" [readonly]="false" [maxStars]="10" [color]="'#000000'"
+                [initialStars]="getPlayerRating(user)" (ratingOutput)="ratePlayer($event, user)" [size]="2">
               </ngx-stars>
               <span *ngIf="user.UserId === userId && user.CanRate" class="colorred">Cannot rate yourself.</span>
               <span *ngIf="!user.CanRate" class="colorred">This user can not be rated yet.</span>
             </td>
             <td style="width:20%!important">
-              {{ user.CanRate ? (_commonService.calculateRating(user, getPriviledgedUsers()) | number: "1.2-2") : "N/A" }}
+              {{ user.CanRate ? (_commonService.calculateRating(user, getPriviledgedUsers()) | number: "1.2-2") : "N/A"
+              }}
             </td>
             <td *ngIf="isAdmin">
               <input type="checkbox" [ngModel]="user.CanRate" (ngModelChange)="setRatePrivilage($event, user)" />
@@ -64,14 +65,16 @@
               {{ +user.Role === 0 ? "Goalkeeper" : "Player" }}
             </td>
             <td style="width:20%!important">
-              <ngx-stars *ngIf="me && me.CanRate && user.UserId !== userId && user.CanRate && showRatings" [customStarIcons]="heartIcons"
-                [readonly]="false" [maxStars]="10" [color]="'#000000'" [initialStars]="getPlayerRating(user)"
-                (ratingOutput)="ratePlayer($event, user,this)" [size]="2"></ngx-stars>
+              <ngx-stars *ngIf="me && me.CanRate && user.UserId !== userId && user.CanRate && showRatings"
+                [customStarIcons]="heartIcons" [readonly]="false" [maxStars]="10" [color]="'#000000'"
+                [initialStars]="getPlayerRating(user)" (ratingOutput)="ratePlayer($event, user,this)" [size]="2">
+              </ngx-stars>
               <span *ngIf="user.UserId === userId && user.CanRate" class="colorred">Cannot rate yourself.</span>
               <span *ngIf="!user.CanRate" class="colorred">This user can not be rated yet.</span>
             </td>
             <td style="width:20%!important">
-              {{ user.CanRate ? (_commonService.calculateRating(user, getPriviledgedUsers()) | number: "1.2-2") : (user.Email === 'albin.gara@solaborate.com' ? "UNDISPUTED" : "N/A") }}
+              {{ user.CanRate ? (_commonService.calculateRating(user, getPriviledgedUsers()) | number: "1.2-2") :
+              (user.Email === 'albin.gara@solaborate.com' ? "UNDISPUTED" : "N/A") }}
             </td>
             <td *ngIf="isAdmin">
               <input type="checkbox" [ngModel]="user.CanRate" (ngModelChange)="setRatePrivilage($event, user)" />

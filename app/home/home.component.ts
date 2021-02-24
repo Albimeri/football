@@ -5,6 +5,13 @@ import { Router } from "@angular/router";
 import { HomeService } from "./home.service";
 import { PromptData } from "../prompt-dialog/prompt-dialog.data";
 import { CommonService } from "../common/common.service";
+import {
+  fieldsEnum,
+  daysEnum,
+  hoursEnum,
+  rolesEnum,
+  adminsEnum,
+} from "../constants/enums";
 
 @Component({
   selector: "app-home",
@@ -29,100 +36,12 @@ export class HomeComponent implements OnInit {
   statusDayInt: number = 1; // monday
   countDownDate: string;
   promptDataLogOut: PromptData;
-  days: any = [
-    {
-      Description: "Monday",
-      Key: 1,
-    },
-    {
-      Description: "Tuesday",
-      Key: 2,
-    },
-    {
-      Description: "Wednesday",
-      Key: 3,
-    },
-    {
-      Description: "Thursday",
-      Key: 4,
-    },
-    {
-      Description: "Friday",
-      Key: 5,
-    },
-    {
-      Description: "Saturday",
-      Key: 6,
-    },
-    {
-      Description: "Sunday",
-      Key: 7,
-    },
-  ];
-  hours: any = [
-    {
-      Description: "17:00",
-      Key: 17,
-    },
-    {
-      Description: "18:00",
-      Key: 18,
-    },
-    {
-      Description: "19:00",
-      Key: 19,
-    },
-    {
-      Description: "20:00",
-      Key: 20,
-    },
-    {
-      Description: "21:00",
-      Key: 21,
-    },
-    {
-      Description: "22:00",
-      Key: 22,
-    },
-    {
-      Description: "23:00",
-      Key: 23,
-    },
-    {
-      Description: "00:00",
-      Key: 24,
-    },
-  ];
-  fields: any = [
-    {
-      Coordinations: "42.661585, 21.187517",
-      Description: "Prishtina",
-      Key: 1,
-    },
-    {
-      Coordinations: "42.674183, 21.133837",
-      Description: "Ylli",
-      Key: 2,
-    },
-    {
-      Coordinations: "42.674183, 21.133837",
-      Description: "Princi",
-      Key: 3,
-    },
-  ];
-  roles: any = [
-    {
-      Description: "Goal Keeper",
-      Key: 0,
-    },
-    {
-      Description: "Player",
-      Key: 1,
-    },
-  ];
+  days: any = daysEnum;
+  hours: any = hoursEnum;
+  roles: any = rolesEnum;
   selectedFieldKey: number = 1;
   selectedRoleInt: number = 1;
-  selectedField: any = this.fields[0];
+  selectedField: any = fieldsEnum[0];
   newPlayerName: string;
   newPlayerRole: number = 1;
   me: any;
@@ -155,11 +74,7 @@ export class HomeComponent implements OnInit {
       this.userId = res.uid;
       this.emailAddress = res.email;
       this.displayName = res.displayName;
-      this.isAdmin = [
-        "albimeri94@outlook.com",
-        "eabdullahu94@gmail.com",
-        "muhamed.r.krasniqi@gmail.com",
-      ].includes(res.email);
+      this.isAdmin = adminsEnum.includes(res.email);
 
       this._db
         .list("/users")
@@ -249,7 +164,7 @@ export class HomeComponent implements OnInit {
         .valueChanges()
         .subscribe((field) => {
           this.selectedFieldKey = field as any;
-          this.selectedField = this.fields.find(
+          this.selectedField = fieldsEnum.find(
             (item) => item.Key === +this.selectedFieldKey
           );
         });
@@ -258,14 +173,14 @@ export class HomeComponent implements OnInit {
 
   canSetDateFunc(matchDate): boolean {
     const dateNow = new Date();
-    debugger;
+    const twoDaysBeforeMatch = matchDate.getTime() - 2 * 24 * 60 * 60 * 1000;
     if (
       this.matchDayInt === dateNow.getDay() &&
       dateNow.getHours() >= this.matchHoursInt
     ) {
       return false;
     }
-    return matchDate.getDate() - 2 <= dateNow.getDate();
+    return twoDaysBeforeMatch <= dateNow.getTime();
   }
 
   sortList(list): any {

@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { PromptData } from "../prompt-dialog/prompt-dialog.data";
 import { HomeService } from "../home/home.service";
 import { CommonService } from "../common/common.service";
+import { adminsEnum } from "../constants/enums";
 
 @Component({
   selector: "app-ratings",
@@ -72,11 +73,7 @@ export class RatingsComponent implements OnInit {
 
   ngOnInit() {
     this._auth.authState.subscribe((res) => {
-      this.isAdmin = [
-        "albimeri94@outlook.com",
-        "eabdullahu94@gmail.com",
-        "muhamed.r.krasniqi@gmail.com",
-      ].includes(res.email);
+      this.isAdmin = adminsEnum.includes(res.email);
       this.isDataLoded = true;
       if (!res || !res.emailVerified) {
         this._router.navigateByUrl("/login");

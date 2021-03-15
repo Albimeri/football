@@ -56,7 +56,7 @@ export class RatingsComponent implements OnInit {
           let average1 = this._commonService.calculateRating(a, priviledged);
           let average2 = this._commonService.calculateRating(b, priviledged);
           return average1 < average2 ? 1 : -1;
-        });
+        }); 
         if (
           this.me &&
           this.me.CanRate &&
@@ -169,5 +169,18 @@ export class RatingsComponent implements OnInit {
 
   checkLocation(location): boolean {
     return window.location.href.indexOf(location) > -1;
+  }
+
+  getRatedBy(ratings): number {
+    const priviledgedUserIds = this.getPriviledgedUsers().map(
+      (user) => user.UserId
+    );
+    let result = 0;
+    ratings.forEach((rating) => {
+      if (priviledgedUserIds.includes(rating.Key)) {
+        result += 1;
+      }
+    }); 
+    return result;
   }
 }
